@@ -14,9 +14,9 @@ const applySwapiEndpoints = (server, app) => {
 
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
         const personageId= req.params.id;
-        const prueba= await app.people.GetPersonage.getById(personageId, app);
+        const personageData= await app.people.GetPersonage.getById(personageId, app);
         console.log("prueba: ");
-        console.log(prueba);
+        console.log(personageData);
         console.log("------------");
         const peopleDB= await app.db.swPeople.findAll();
         if(peopleDB[0].dataValues.id==personageId){

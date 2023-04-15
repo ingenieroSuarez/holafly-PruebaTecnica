@@ -1,7 +1,10 @@
 class Personage{
-    constructor(id){
+    constructor(id, name, mass, height, homeworld_name){
         this.id = id;
-        console.log("construyendo: ", this.id);
+        this.name= name;
+        this.mass= mass;
+        this.height=height;
+        this.homeworld= homeworld;
   }
   getId() {
     console.log("enviando id: ");
