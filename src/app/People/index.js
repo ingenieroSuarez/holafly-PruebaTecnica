@@ -1,5 +1,8 @@
+const GetPersonage = require('./getPersonage');
+/*
 const WookieePeople = require('./wookieePeople');
 const CommonPeople = require('./CommonPeople');
+
 
 const peopleFactory = async (id, lang) => {
     let people = null;
@@ -11,5 +14,6 @@ const peopleFactory = async (id, lang) => {
     await people.init();
     return people;
 }
-
-module.exports = { peopleFactory }
+module.exports = { peopleFactory, GetPeople }
+*/
+module.exports = {  GetPersonage }

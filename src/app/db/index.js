@@ -44,7 +44,7 @@ const populateDB = async () => {
   ]);
   await db.swPeople.bulkCreate([
     {
-      name: "Luke Skywalker",
+      name: "Luke Skywalker2",
       height: 172,
       mass: 77,
       homeworld_name: "Tatooine",
@@ -67,13 +67,20 @@ const watchDB = async () => {
   const people = await db.swPeople.findAll({
     raw: true,
   });
+  const personage= await db.swPeople.findOne({
+    where: { id: 1 },
+    attributes: ['id', 'name']
+  })
 
+  
   console.log("============= swPlanet =============");
   console.table(planets);
   console.log("\n");
   console.log("============= swPeople =============");
   console.table(people);
+
 }
+
 
 db.initDB = initDB;
 db.populateDB = populateDB;
