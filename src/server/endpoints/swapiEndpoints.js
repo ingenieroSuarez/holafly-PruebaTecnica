@@ -33,12 +33,12 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
-        res.sendStatus(501);
+        const weight= await app.planet.getWeightOnPlanet.getRandom(app)
+        res.send(weight);
     });
 
     server.get('/hfswapi/getLogs',async (req, res) => {
         const data = await app.db.watchDB();
-        
         res.send(data);
     });
 
