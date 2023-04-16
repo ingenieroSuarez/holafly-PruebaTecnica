@@ -1,3 +1,4 @@
-const Planet = require('./Planet');
+const Planet = require('./model/Planet');
+const serviceGetPlanet= require('./service/serviceGetPlanet')
 
-module.exports = { Planet }
+module.exports = { Planet, serviceGetPlanet }

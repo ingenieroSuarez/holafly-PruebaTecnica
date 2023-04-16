@@ -44,7 +44,7 @@ const populateDB = async () => {
   ]);
   await db.swPeople.bulkCreate([
     {
-      name: "Luke Skywalker2",
+      name: "Luke Skywalker",
       height: 172,
       mass: 77,
       homeworld_name: "Tatooine",

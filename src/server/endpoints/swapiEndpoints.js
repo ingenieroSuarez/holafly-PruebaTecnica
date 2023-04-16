@@ -14,34 +14,21 @@ const applySwapiEndpoints = (server, app) => {
 
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
         const personageId= req.params.id;
-        const personageData= await app.people.GetPersonage.getById(personageId, app);
-        console.log("prueba: ");
-        console.log(personageData);
-        console.log("------------");
-        const peopleDB= await app.db.swPeople.findAll();
-        if(peopleDB[0].dataValues.id==personageId){
-            const {name, mass, height, homeworld} = peopleDB[0].dataValues;
-            return res.status(200).send({name, mass, height, homeworld});
+        const personageData= await app.people.serviceGetPersonage.getById(personageId, app);
+        if(personageData===undefined){
+            return res.status(204).send("Personage not found")
+        }else{
+            return res.status(200).send(personageData);
         }
-        let personageFound=false;
-        const urlApiStarWarsPeople=`${process.env.URL_API}people/${personageId}`;
-        const personageApiResponse = await app.swapiFunctions.genericRequest( urlApiStarWarsPeople, 'GET', null, true);
-        personageFound=!personageFound;
-        const {name, mass, height, homeworld} = personageApiResponse;
-        res.send({name, mass, height, homeworld});
     });
 
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {
         const planetId= req.params.id;
-        const urlStarWarsApiPlanets=`${process.env.URL_API}planets/${planetId}`;
-        const planetApiResponse = await app.swapiFunctions.genericRequest( urlStarWarsApiPlanets, 'GET', null, true);
-        let planetFound;
-        planetApiResponse.detail? planetFound=false:planetFound=true;
-        if(planetFound){
-            const {name, gravity}= planetApiResponse;
-            return res.status(200).send({name, gravity});
-        }else{
+        const planetData= await app.planet.serviceGetPlanet.getPlanetById(planetId, app);
+        if(planetData===undefined){
             return res.status(204).send("Planet not found")
+        }else{
+            return res.status(200).send(planetData);
         }
     });
 
@@ -51,14 +38,7 @@ const applySwapiEndpoints = (server, app) => {
 
     server.get('/hfswapi/getLogs',async (req, res) => {
         const data = await app.db.watchDB();
-        const planetsDB= await app.db.swPlanet.findAll();
         
-        const data3= await app.db.swPeople.findOne()
-        console.log(planetsDB[0].dataValues);
-        console.log("_____________");
-
-        console.log("_____________");
-        console.log(data3.dataValues);
         res.send(data);
     });
 
