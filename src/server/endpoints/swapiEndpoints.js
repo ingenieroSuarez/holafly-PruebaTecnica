@@ -38,7 +38,7 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getLogs',async (req, res) => {
-        const data = await app.db.watchDB();
+        const data = await app.db.watchLog();
         res.send(data);
     });
 

@@ -2,11 +2,10 @@
 
 const Sequelize = require('sequelize');
 const models = require('./models');
-
 let sequelize;
 
 sequelize = new Sequelize("sqlite::memory:", {
-  logging: false //console.log
+  logging: false
 });
 
 const db = {
@@ -52,6 +51,14 @@ const populateDB = async () => {
     }
   ]);
 }
+const insertLogging = async (ip, headers, originalUrl) => {
+  const logging= {
+    ip: ip,
+    header: headers, 
+    action:originalUrl
+  }
+  db.logging.create(logging);
+}
 
 const deleteDB = async () => {
   await db.swPeople.drop();
@@ -59,12 +66,16 @@ const deleteDB = async () => {
   await db.logging.drop();
 }
 
+
 const watchDB = async () => {
   const planets = await db.swPlanet.findAll({
     raw: true,
   });
 
   const people = await db.swPeople.findAll({
+    raw: true,
+  });
+  const logging = await db.logging.findAll({
     raw: true,
   });
   const personage= await db.swPeople.findOne({
@@ -78,13 +89,21 @@ const watchDB = async () => {
   console.log("\n");
   console.log("============= swPeople =============");
   console.table(people);
-
+  console.log("============= logging =============");
+  console.table(logging);
 }
-
+const watchLog= async ()=>{
+  const logging = await db.logging.findAll({
+    raw: true,
+  });
+  return logging
+}
 
 db.initDB = initDB;
 db.populateDB = populateDB;
 db.watchDB = watchDB;
+db.watchLog = watchLog;
 db.deleteDB = deleteDB;
+db.insertLogging=insertLogging;
 
 module.exports = db;
